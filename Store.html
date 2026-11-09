@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FreshGlow | Smart Food Freshness Pucks</title>
+
+    <!-- Materialize CSS & Google Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap">
+
+    <style>
+        /* Smooth Scrolling for Quick Links */
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 64px;
+        }
+
+        :root {
+            --brand-cream: #FFF4DD;
+            --brand-green: #839D52;
+            --brand-green-dark: #63793D;
+            --brand-black: #1A1A1A;
+            --brand-white: #FFFFFF;
+            --status-green: #4CAF50;
+            --status-yellow: #FBC02D;
+            --status-red: #F44336;
+        }
+
+        body {
+            background-color: var(--brand-cream);
+            color: var(--brand-black);
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            min-height: 100vh;
+            flex-direction: column;
+        }
+
+        main {
+            flex: 1 0 auto;
+        }
+
+        /* Navigation Bar */
+        nav {
+            background-color: var(--brand-green);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        nav .brand-logo {
+            font-weight: 700;
+            letter-spacing: 1px;
+            padding-left: 15px;
+        }
+
+        nav ul a:hover {
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+
+        .badge-cart {
+            background-color: var(--brand-black) !important;
+            border-radius: 50%;
+        }
+
+        /* Slideshow / Carousel */
+        .carousel.carousel-slider {
+            height: 400px !important;
+            border-bottom: 4px solid var(--brand-green);
+        }
+
+        .carousel .carousel-item {
+            position: relative;
+        }
+
+        .carousel .carousel-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .carousel-item-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: #ffffff;
+            background: rgba(26, 26, 26, 0.7);
+            padding: 30px 40px;
+            border-radius: 12px;
+            width: 80%;
+            max-width: 700px;
+            z-index: 2;
+        }
+
+        .carousel-item-content h2 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-top: 0;
+        }
+
+        /* Section Styling */
+        .section-heading {
+            text-align: center;
+            margin: 40px 0 10px 0;
+            font-weight: 700;
+            color: var(--brand-black);
+        }
+
+        .section-subheading {
+            text-align: center;
+            color: #555;
+            margin-bottom: 40px;
+        }
+
+        /* Status Indicator Banner */
+        .status-banner {
+            background: var(--brand-white);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 40px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .status-dot {
+            height: 18px;
+            width: 18px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+
+        .dot-green {
+            background-color: var(--status-green);
+        }
+
+        .dot-yellow {
+            background-color: var(--status-yellow);
+        }
+
+        .dot-red {
+            background-color: var(--status-red);
+        }
+
+        /* Product Cards & Fixed Image Sizing */
+        .card {
+            border-radius: 12px;
+            overflow: hidden;
+            background-color: var(--brand-white);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-image-wrapper {
+            height: 220px;
+            background-color: #F9F9F9;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 1px solid #E0E0E0;
+            padding: 12px;
+        }
+
+        .card-image-wrapper img {
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+        }
+
+        .image-placeholder-text {
+            color: #888888;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        .card-content {
+            flex-grow: 1;
+            padding: 20px;
+        }
+
+        .card-title-custom {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--brand-black);
+            margin-bottom: 10px;
+        }
+
+        .card-price {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--brand-green-dark);
+            margin-bottom: 12px;
+        }
+
+        .card-action-custom {
+            padding: 15px 20px;
+            background-color: var(--brand-white);
+            border-top: 1px solid #F0F0F0;
+        }
+
+        .btn-freshglow {
+            background-color: var(--brand-green) !important;
+            color: var(--brand-white) !important;
+            width: 100%;
+            border-radius: 6px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-freshglow:hover {
+            background-color: var(--brand-green-dark) !important;
+        }
+
+        /* Team Member Cards */
+        .team-card {
+            background-color: var(--brand-white);
+            border-radius: 12px;
+            padding: 25px 15px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            height: 100%;
+        }
+
+        .team-img-wrapper {
+            width: 130px;
+            height: 130px;
+            margin: 0 auto 15px auto;
+            position: relative;
+        }
+
+        .team-img-wrapper img.circle {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border: 3px solid var(--brand-green);
+        }
+
+        .team-placeholder-circle {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background-color: #EFEFEF;
+            border: 3px solid var(--brand-green);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+        }
+
+        .team-role {
+            color: var(--brand-green-dark);
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-top: -5px;
+            margin-bottom: 15px;
+        }
+
+        /* Footer */
+        footer.page-footer {
+            background-color: var(--brand-black);
+            color: var(--brand-cream);
+            padding-top: 25px;
+            padding-bottom: 0;
+        }
+
+        footer.page-footer .footer-copyright {
+            background-color: #0d0d0d;
+            color: #aaa;
+            margin-top: 20px;
+        }
+
+        .team-img-wrapper {
+            width: 130px;
+            height: 130px;
+            margin: 0 auto 15px auto;
+            position: relative;
+            border-radius: 50%;
+            overflow: hidden;
+            /* Prevents zoomed images from leaking outside the circle */
+            border: 3px solid var(--brand-green);
+        }
+
+        .team-img-wrapper img.circle {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border: none;
+            transform-origin: center center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- HEADER / NAVBAR -->
+    <header>
+        <div class="navbar-fixed">
+            <nav>
+                <div class="nav-wrapper container">
+                    <a href="#" class="brand-logo"><i class="material-icons left">eco</i>FreshGlow</a>
+                    <a href="#" data-target="mobile-nav" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+                    <ul class="right hide-on-med-and-down">
+                        <li><a href="#slideshow">Featured</a></li>
+                        <li><a href="#how-it-works">How It Works</a></li>
+                        <li><a href="#products">Shop Pucks</a></li>
+                        <li><a href="#team">Meet Our Team</a></li>
+                        <li>
+                            <a href="#cart" class="valign-wrapper">
+                                <i class="material-icons">shopping_cart</i>
+                                <span class="new badge badge-cart" data-badge-caption="">0</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+
+        <!-- Mobile Navigation -->
+        <ul class="sidenav" id="mobile-nav">
+            <li><a href="#slideshow"><i class="material-icons">star</i>Featured</a></li>
+            <li><a href="#products"><i class="material-icons">store</i>Shop Pucks</a></li>
+            <li><a href="#how-it-works"><i class="material-icons">info</i>How It Works</a></li>
+            <li><a href="#team"><i class="material-icons">group</i>Meet Our Team</a></li>
+        </ul>
+    </header>
+
+    <main>
+        <!-- SCROLLING SLIDESHOW / CAROUSEL -->
+        <section id="slideshow">
+            <div class="carousel carousel-slider center">
+
+                <!-- Slide 1 -->
+                <div class="carousel-item" href="#one!">
+                    <img src="SP6%20copy.jpg" alt="FreshGlow Smart Puck Slide 1">
+                    <div class="carousel-item-content">
+                        <h2>Save Hundreds by Reducing Food Waste</h2>
+                        <p>Smart LED indicators track gases so you know the exact conditions of your food.</p>
+                        <a href="#products" class="btn btn-large waves-effect waves-light btn-freshglow">View Products</a>
+                    </div>
+                </div>
+
+                <!-- Slide 2 -->
+                <div class="carousel-item" href="#two!">
+                    <img src="SP5%20copy.jpg" alt="FreshGlow Container Slide 2">
+                    <div class="carousel-item-content">
+                        <h2>Works With Your Existing Food Containers</h2>
+                        <p>Our Smart Pucks Are Simple to Use, Versatile, and Easy to Clean and Reuse.</p>
+                        <a href="#products" class="btn btn-large waves-effect waves-light btn-freshglow">View Products</a>
+                    </div>
+                </div>
+
+                <!-- Slide 3 -->
+                <div class="carousel-item" href="#three!">
+                    <img src="SP3%20copy.jpg" alt="FreshGlow App Alert Slide 3">
+                    <div class="carousel-item-content">
+                        <h2>Get Multiple. Save Money.</h2>
+                        <p>Our Value Packs Help People Get Multiple Smart Pucks, Saving Even More Money!</p>
+                        <a href="#products" class="btn btn-large waves-effect waves-light btn-freshglow">View Products</a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <div class="container">
+
+            <!-- HOW IT WORKS BANNER -->
+            <section id="how-it-works" class="section">
+                <h4 class="section-heading">Visual Freshness Indicators</h4>
+                <p class="section-subheading">A simple, color-coded LED light proven to directly influence fridge and food waste habits.</p>
+                <div class="status-banner">
+                    <div class="row margin-bottom-0">
+                        <div class="col s12 m4 center-align" style="margin-bottom: 15px;">
+                            <span class="status-dot dot-green"></span>
+                            <strong>GREEN STATUS: Safe & Fresh</strong>
+                            <p class="grey-text text-darken-1" style="font-size: 0.9rem; margin-top: 5px;">Food spoilage is minimal. Safe to store. No immediate usage rush needed.</p>
+                        </div>
+                        <div class="col s12 m4 center-align" style="margin-bottom: 15px;">
+                            <span class="status-dot dot-yellow"></span>
+                            <strong>YELLOW STATUS: Eat Soon</strong>
+                            <p class="grey-text text-darken-1" style="font-size: 0.9rem; margin-top: 5px;">Early gas fluctuations detected. Plan to eat within a few days.</p>
+                        </div>
+                        <div class="col s12 m4 center-align" style="margin-bottom: 15px;">
+                            <span class="status-dot dot-red"></span>
+                            <strong>RED STATUS: Choose Immediately</strong>
+                            <p class="grey-text text-darken-1" style="font-size: 0.9rem; margin-top: 5px;">High gas degradation detected. Use it or lose it. Eat at your own risk.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- PRODUCTS SECTION (10 CARDS) -->
+            <section id="products" class="section">
+                <h4 class="section-heading">Our FreshGlow Lineup</h4>
+                <p class="section-subheading">Choose from our diverse lineup of Smart Pucks.</p>
+
+                <div class="row">
+
+                    <!-- Card 1 -->
+                    <div class="col s12 m6 l4" style="margin-bottom: 25px;">
+                        <div class="card">
+                            <div class="card-image-wrapper">
+                                <img src="SP11%20copy.jpg" alt="FreshGlow Universal Smart Puck" onload="this.style.display='block'; if(this.nextElementSibling) this.nextElementSibling.style.display='none';" style="display:none;">
+                                <div class="image-placeholder-text"><i class="material-icons block">image</i><br>[ Add Image 1 URL ]</div>
+                            </div>
+                            <div class="card-content">
+                                <div class="card-title-custom">FreshGlow Base (Produce) Smart Puck (Assorted Colors)</div>
+                                <div class="card-price">$49.99</div>
+                            </div>
+                            <div class="card-action-custom">
+                                <button class="btn waves-effect waves-light btn-freshglow"><i class="material-icons left">add_shopping_cart</i>Add To Cart</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 2 -->
+                    <div class="col s12 m6 l4" style="margin-bottom: 25px;">
+                        <div class="card">
+                            <div class="card-image-wrapper">
+                                <img src="SP12%20copy.jpg" alt="FreshGlow Universal 3-Pack" onload="this.style.display='block'; if(this.nextElementSibling) this.nextElementSibling.style.display='none';" style="display:none;">
+                                <div class="image-placeholder-text"><i class="material-icons block">image</i><br>[ Add Image 2 URL ]</div>
+                            </div>
+                            <div class="card-content">
+                                <div class="card-title-custom">FreshGlow Base (Meat) Smart Puck (Assorted Colors)</div>
+                                <div class="card-price">$49.99</div>
+                            </div>
+                            <div class="card-action-custom">
+                                <button class="btn waves-effect waves-light btn-freshglow"><i class="material-icons left">add_shopping_cart</i>Add To Cart</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 3 -->
+                    <div class="col s12 m6 l4" style="margin-bottom: 25px;">
+                        <div class="card">
+                            <div class="card-image-wrapper">
+                                <img src="SP15%20copy.jpg" alt="FreshGlow Produce Puck" onload="this.style.display='block'; if(this.nextElementSibling) this.nextElementSibling.style.display='none';" style="display:none;">
+                                <div class="image-placeholder-text"><i class="material-icons block">image</i><br>[ Add Image 3 URL ]</div>
+                            </div>
+                            <div class="card-content">
+                                <div class="card-title-custom">FreshGlow Base (Seafood) Smart Puck (Assorted Colors)</div>
+                                <div class="card-price">$24.99</div>
+                            </div>
+                            <div class="card-action-custom">
+                                <button class="btn waves-effect waves-light btn-freshglow"><i class="material-icons left">add_shopping_cart</i>Add To Cart</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 4 -->
+                    <div class="col s12 m6 l4" style="margin-bottom: 25px;">
+                        <div class="card">
+                            <div class="card-image-wrapper">
+                                <img src="SP1%20copy.jpg" alt="FreshGlow Meat & Poultry Puck" onload="this.style.display='block'; if(this.nextElementSibling) this.nextElementSibling.style.display='none';" style="display:none;">
+                                <div class="image-placeholder-text"><i class="material-icons block">image</i><br>[ Add Image 4 URL ]</div>
+                            </div>
+                            <div class="card-content">
+                                <div class="card-title-custom">FreshGlow Universal Smart Puck (Assorted Colors)</div>
+                                <div class="card-price">$79.99</div>
+                            </div>
+                            <div class="card-action-custom">
+                                <button class="btn waves-effect waves-light btn-freshglow"><i class="material-icons left">add_shopping_cart</i>Add To Cart</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 5 -->
+                    <div class="col s12 m6 l4" style="margin-bottom: 25px;">
+                        <div class="card">
+                            <div class="card-image-wrapper">
+                                <img src="SP8%20copy.jpg" alt="FreshGlow Seafood Puck" onload="this.style.display='block'; if(this.nextElementSibling) this.nextElementSibling.style.display='none';" style="display:none;">
+                                <div class="image-placeholder-text"><i class="material-icons block">image</i><br>[ Add Image 5 URL ]</div>
+                            </div>
+                            <div class="card-content">
+                                <div class="card-title-custom">FreshGlow Glass Container (Assorted Colors)</div>
+                                <div class="card-price">$9.99</div>
+                            </div>
+                            <div class="card-action-custom">
+                                <button class="btn waves-effect waves-light btn-freshglow"><i class="material-icons left">add_shopping_cart</i>Add To Cart</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 6 -->
+                    <div class="col s12 m6 l4" style="margin-bottom: 25px;">
+                        <div class="card">
+                            <div class="card-image-wrapper">
+                                <img src="SP16%20copy.jpg" alt="FreshGlow Starter Bundle" onload="this.style.display='block'; if(this.nextElementSibling) this.nextElementSibling.style.display='none';" style="display:none;">
+                                <div class="image-placeholder-text"><i class="material-icons block">image</i><br>[ Add Image 6 URL ]</div>
+                            </div>
+                            <div class="card-content">
+                                <div class="card-title-custom">FreshGlow Base Smart Puck 2 Pack (Assorted Colors)</div>
+                                <div class="card-price">$89.99</div>
+                            </div>
+                            <div class="card-action-custom">
+                                <button class="btn waves-effect waves-light btn-freshglow"><i class="material-icons left">add_shopping_cart</i>Add To Cart</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 7 -->
+                    <div class="col s12 m6 l4" style="margin-bottom: 25px;">
+                        <div class="card">
+                            <div class="card-image-wrapper">
+                                <img src="SP13%20copy.jpg" alt="Container Mount Clips 4-Pack" onload="this.style.display='block'; if(this.nextElementSibling) this.nextElementSibling.style.display='none';" style="display:none;">
+                                <div class="image-placeholder-text"><i class="material-icons block">image</i><br>[ Add Image 7 URL ]</div>
+                            </div>
+                            <div class="card-content">
+                                <div class="card-title-custom">FreshGlow Base Smart Puck 4 Pack (Assorted Colors)</div>
+                                <div class="card-price">$174.99</div>
+                            </div>
+                            <div class="card-action-custom">
+                                <button class="btn waves-effect waves-light btn-freshglow"><i class="material-icons left">add_shopping_cart</i>Add To Cart</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 8 -->
+                    <div class="col s12 m6 l4" style="margin-bottom: 25px;">
+                        <div class="card">
+                            <div class="card-image-wrapper">
+                                <img src="SP10%20copy.jpg" alt="Smart Hub & Wireless Charger" onload="this.style.display='block'; if(this.nextElementSibling) this.nextElementSibling.style.display='none';" style="display:none;">
+                                <div class="image-placeholder-text"><i class="material-icons block">image</i><br>[ Add Image 8 URL ]</div>
+                            </div>
+                            <div class="card-content">
+                                <div class="card-title-custom">FreshGlow Universal Smart Puck 2 Pack (Assorted Colors)</div>
+                                <div class="card-price">$29.99</div>
+                            </div>
+                            <div class="card-action-custom">
+                                <button class="btn waves-effect waves-light btn-freshglow"><i class="material-icons left">add_shopping_cart</i>Add To Cart</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 9 -->
+                    <div class="col s12 m6 l4" style="margin-bottom: 25px;">
+                        <div class="card">
+                            <div class="card-image-wrapper">
+                                <img src="SP17%20copy.jpg" alt="Gas Sensor Refill Pods" onload="this.style.display='block'; if(this.nextElementSibling) this.nextElementSibling.style.display='none';" style="display:none;">
+                                <div class="image-placeholder-text"><i class="material-icons block">image</i><br>[ Add Image 9 URL ]</div>
+                            </div>
+                            <div class="card-content">
+                                <div class="card-title-custom">FreshGlow Base Smart Puck & Glass Container (Assorted Colors)</div>
+                                <div class="card-price">$54.99</div>
+                            </div>
+                            <div class="card-action-custom">
+                                <button class="btn waves-effect waves-light btn-freshglow"><i class="material-icons left">add_shopping_cart</i>Add To Cart</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 10 -->
+                    <div class="col s12 m6 l4" style="margin-bottom: 25px;">
+                        <div class="card">
+                            <div class="card-image-wrapper">
+                                <img src="SP14%20copy.jpg" alt="FreshGlow Family Chef Pack" onload="this.style.display='block'; if(this.nextElementSibling) this.nextElementSibling.style.display='none';" style="display:none;">
+                                <div class="image-placeholder-text"><i class="material-icons block">image</i><br>[ Add Image 10 URL ]</div>
+                            </div>
+                            <div class="card-content">
+                                <div class="card-title-custom">FreshGlow Base Smart Puck & Glass Container (Assorted Colors)</div>
+                                <div class="card-price">$84.99</div>
+                            </div>
+                            <div class="card-action-custom">
+                                <button class="btn waves-effect waves-light btn-freshglow"><i class="material-icons left">add_shopping_cart</i>Add To Cart</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- MEET OUR TEAM SECTION -->
+            <section id="team" class="section">
+                <h4 class="section-heading">Meet Our Team</h4>
+                <p class="section-subheading">The innovators behind FreshGlow</p>
+
+                <div class="row">
+
+                    <!-- Member 1: Landry Knore -->
+                    <div class="col s12 m6 l3" style="margin-bottom: 20px;">
+                        <div class="team-card">
+                            <div class="team-img-wrapper">
+                                <!-- Adjust scale(...) to zoom & object-position to shift -->
+                                <img src="HS1%20copy.png" alt="Landry Knore" class="circle responsive-img" style="display:none; transform: scale(1.3); object-position: 50% -10%;" onload="this.style.display='block'; if(this.nextElementSibling) this.nextElementSibling.style.display='none';">
+                                <div class="team-placeholder-circle">
+                                    <i class="material-icons medium">person</i>
+                                </div>
+                            </div>
+                            <h5 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 4px;">Landry Knore</h5>
+                            <div class="team-role">Numbers & Financials</div>
+                        </div>
+                    </div>
+
+                    <!-- Member 2: Stella Warfe -->
+                    <div class="col s12 m6 l3" style="margin-bottom: 20px;">
+                        <div class="team-card">
+                            <div class="team-img-wrapper">
+                                <img src="HS2%20copy.png" alt="Stella Warfe" class="circle responsive-img" style="display:none; transform: scale(1.0); object-position: 50% 20%;" onload="this.style.display='block'; if(this.nextElementSibling) this.nextElementSibling.style.display='none';">
+                                <div class="team-placeholder-circle">
+                                    <i class="material-icons medium">person</i>
+                                </div>
+                            </div>
+                            <h5 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 4px;">Stella Warfe</h5>
+                            <div class="team-role">Storyteller & Creator</div>
+                        </div>
+                    </div>
+
+                    <!-- Member 3: Sydney Sutton -->
+                    <div class="col s12 m6 l3" style="margin-bottom: 20px;">
+                        <div class="team-card">
+                            <div class="team-img-wrapper">
+                                <img src="HS3%20copy.png" alt="Sydney Sutton" class="circle responsive-img" style="display:none; transform: scale(1.5); object-position: 50% -30%;" onload="this.style.display='block'; if(this.nextElementSibling) this.nextElementSibling.style.display='none';">
+                                <div class="team-placeholder-circle">
+                                    <i class="material-icons medium">person</i>
+                                </div>
+                            </div>
+                            <h5 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 4px;">Sydney Sutton</h5>
+                            <div class="team-role">Builder & Research</div>
+                        </div>
+                    </div>
+
+                    <!-- Member 4: Roman Batik -->
+                    <div class="col s12 m6 l3" style="margin-bottom: 20px;">
+                        <div class="team-card">
+                            <div class="team-img-wrapper">
+                                <img src="HS4%20copy.png" alt="Roman Batik" class="circle responsive-img" style="display:none; transform: scale(1.0); object-position: 50% 70%;" onload="this.style.display='block'; if(this.nextElementSibling) this.nextElementSibling.style.display='none';">
+                                <div class="team-placeholder-circle">
+                                    <i class="material-icons medium">person</i>
+                                </div>
+                            </div>
+                            <h5 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 4px;">Roman Batik</h5>
+                            <div class="team-role">Organizer & Tester</div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- CLEAN FOOTER -->
+    <footer class="page-footer">
+        <div class="container center-align">
+            <h5 class="white-text" style="margin-top: 0;"><i class="material-icons left">eco</i>FreshGlow</h5>
+            <p class="grey-text text-lighten-4" style="max-width: 600px; margin: 0 auto 15px auto;">
+                Smart pucks built to help save money and reduce food waste
+            </p>
+        </div>
+        <div class="footer-copyright">
+            <div class="container center-align">
+                © 2026 FreshGlow | Entrepreneurship 201
+            </div>
+        </div>
+    </footer>
+
+    <!-- Materialize JavaScript & Initialization -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize Mobile Side Navigation
+            var elemsSidenav = document.querySelectorAll('.sidenav');
+            M.Sidenav.init(elemsSidenav);
+
+            // Initialize Carousel / Slideshow
+            var elemsCarousel = document.querySelectorAll('.carousel.carousel-slider');
+            M.Carousel.init(elemsCarousel, {
+                fullWidth: true,
+                indicators: true
+            });
+
+            // Auto-slide every 4.5 seconds
+            setInterval(function() {
+                var instance = M.Carousel.getInstance(document.querySelector('.carousel.carousel-slider'));
+                if (instance) {
+                    instance.next();
+                }
+            }, 4500);
+
+            // Interactive shopping cart counter
+            var cartCount = 0;
+            var cartBadge = document.querySelector('.badge-cart');
+            var addButtons = document.querySelectorAll('.card-action-custom .btn-freshglow');
+
+            addButtons.forEach(function(btn) {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    cartCount++;
+                    if (cartBadge) {
+                        cartBadge.textContent = cartCount;
+                    }
+                    M.toast({
+                        html: 'Added to cart!',
+                        displayLength: 2000,
+                        classes: 'rounded'
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
